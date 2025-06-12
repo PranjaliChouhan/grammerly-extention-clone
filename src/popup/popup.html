@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Extension</title>
+    <link href="styles/output.css" rel="stylesheet">
+    <style>
+        /* Custom styles for radio focus */
+        .option-card input[type="radio"]:focus + div {
+            outline: 2px solid #15c39a;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="w-96 p-4">
+    <div id="app"></div>
+    <div id="onboardingPage" class="p-6">
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <div class="w-8 h-8 bg-grammarly-green rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">G</span>
+                </div>
+                <span class="ml-2 text-xl font-semibold text-gray-800">Grammar Extension</span>
+            </div>
+            <p class="text-gray-600">Select your primary writing purpose:</p>
+        </div>
+
+        <div class="space-y-4">
+            <label class="option-card block">
+                <input type="radio" name="writingPurpose" value="academic" class="hidden">
+                <div class="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-xl">📚</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-medium text-gray-800">Academic Writing</h3>
+                            <p class="text-sm text-gray-600">Essays, research papers, and scholarly work</p>
+                        </div>
+                    </div>
+                </div>
+            </label>
+
+            <label class="option-card block">
+                <input type="radio" name="writingPurpose" value="business" class="hidden">
+                <div class="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-xl">💼</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-medium text-gray-800">Business Communication</h3>
+                            <p class="text-sm text-gray-600">Emails, reports, and professional documents</p>
+                        </div>
+                    </div>
+                </div>
+            </label>
+
+            <label class="option-card block">
+                <input type="radio" name="writingPurpose" value="creative" class="hidden">
+                <div class="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-xl">✨</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-medium text-gray-800">Creative Writing</h3>
+                            <p class="text-sm text-gray-600">Stories, blogs, and creative content</p>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <button id="nextBtn" class="mt-6 w-full bg-grammarly-green text-white py-3 px-4 rounded-lg hover:bg-grammarly-dark-green transition-colors font-medium text-sm flex items-center justify-center">
+            <span>Continue</span>
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html> 

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Extension - AI-Powered Writing Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="font-inter bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-grammarly-green rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">G</span>
+                    </div>
+                    <span class="ml-2 text-xl font-semibold text-gray-800">Grammar Extension</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="btn-secondary">Login</button>
+                    <button id="signupBtn" class="btn-primary">Get Started Free</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-grammarly-light-green to-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold text-gray-900 mb-6">
+                Perfect Your Writing with <span class="text-grammarly-green">AI</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Get real-time grammar, spelling, and style suggestions as you write across the web. 
+                Join millions of users who trust our AI-powered writing assistant.
+            </p>
+            
+            <div id="heroButtons" class="space-y-4">
+                <button id="heroSignup" class="btn-primary text-lg px-8 py-4">
+                    Start Writing Better Today
+                </button>
+                <p class="text-sm text-gray-500">No credit card required • Free forever</p>
+            </div>
+
+            <!-- Extension Status -->
+            <div id="extensionStatus" class="hidden mt-8 p-4 bg-white rounded-lg shadow-md max-w-md mx-auto">
+                <div id="extensionNotInstalled" class="hidden">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Install Browser Extension</h3>
+                    <p class="text-sm text-gray-600 mb-4">Add our extension to start checking grammar across all websites</p>
+                    <button id="installExtension" class="btn-primary w-full">Add to Chrome</button>
+                </div>
+
+                <div id="extensionInstalled" class="hidden">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Extension Ready!</h3>
+                    <p class="text-sm text-gray-600">Start writing on any website to see grammar suggestions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose Grammar Extension?</h2>
+                <p class="text-lg text-gray-600">Powerful AI that helps you write with confidence</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-grammarly-light-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-grammarly-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Real-time Checking</h3>
+                    <p class="text-gray-600">Get instant grammar and spelling suggestions as you type</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-grammarly-light-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-grammarly-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Works Everywhere</h3>
+                    <p class="text-gray-600">Gmail, social media, documents - we've got you covered</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-grammarly-light-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-grammarly-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Learn & Improve</h3>
+                    <p class="text-gray-600">Detailed explanations help you become a better writer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-8 h-8 bg-grammarly-green rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">G</span>
+                    </div>
+                    <span class="ml-2 text-xl font-semibold text-gray-800">Grammar Extension</span>
+                </div>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Welcome Back!</h2>
+                <p class="text-gray-600 text-sm">Sign in to continue improving your writing</p>
+            </div>
+
+            <div class="space-y-4">
+                <button id="googleSignIn" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span class="text-gray-700 font-medium">Continue with Google</span>
+                </button>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Welcome, <span id="userNameDisplay">User</span>!</h3>
+            <p class="text-gray-600 mb-6">You're all set! Now let's install the browser extension to start improving your writing.</p>
+            <button id="proceedToExtension" class="btn-primary w-full">Install Extension</button>
+        </div>
+    </div>
+
+    <script src="../landing.js"></script>
+</body>
+</html>
