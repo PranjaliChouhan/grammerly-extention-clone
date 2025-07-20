@@ -82,6 +82,9 @@ class PopupManager {
     }
 
     // Store the user's selection
+    // Persist the selection so it is immediately available to all content scripts
+    await chrome.storage.local.set({ writingPurpose: selectedPurpose.value });
+    // Also keep the existing structure if needed elsewhere
     await this.storeUserPreferences({ writingPurpose: selectedPurpose.value });
     
     // Show loading state

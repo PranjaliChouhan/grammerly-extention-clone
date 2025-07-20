@@ -40,6 +40,10 @@ function onGetUserData(sendResponse: Function) {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'INITIALIZE_GRAMMAR_CHECKER') {
     chrome.storage.local.set({
+      // Persist the selected purpose under a simple key so the content
+      // script can pick it up immediately on page load without needing
+      // a message from the background script.
+      writingPurpose: request.writingPurpose,
       grammarCheckerSettings: {
         writingPurpose: request.writingPurpose,
         enabled: true
@@ -116,17 +120,34 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 // Check for writing purpose when a tab is updated
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete' && tab.url) {
-    chrome.storage.local.get(['writingPurpose'], (result) => {
-      if (result.writingPurpose) {
-        chrome.tabs.sendMessage(tabId, {
+    const result = await chrome.storage.local.get(['writingPurpose']);
+
+    if (result.writingPurpose) {
+      try {
+        // Attempt to notify existing content script
+        await chrome.tabs.sendMessage(tabId, {
           type: 'START_GRAMMAR_CHECK',
           writingPurpose: result.writingPurpose
-        }).catch(() => {
-          // Ignore errors when content script is not ready
         });
+      } catch (error) {
+        try {
+          // If the content script isn't loaded yet, inject it and try again
+          await chrome.scripting.executeScript({
+            target: { tabId },
+            files: ['content.js']
+          });
+
+          await chrome.tabs.sendMessage(tabId, {
+            type: 'START_GRAMMAR_CHECK',
+            writingPurpose: result.writingPurpose
+          });
+        } catch (injectErr) {
+          // Log so any issues surface during development
+          console.error('Failed to inject content script:', injectErr);
+        }
       }
-    });
+    }
   }
 }); 

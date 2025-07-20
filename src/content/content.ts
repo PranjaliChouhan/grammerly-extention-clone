@@ -10,11 +10,25 @@ class GrammarChecker {
   private observer: MutationObserver | null = null;
   private isMinimized: boolean = false;
   private activeElement: HTMLElement | null = null;
+  private icon: HTMLElement | null = null;
 
   constructor() {
     this.initializeFromStorage();
     this.injectStyles();
     this.initializeMessageListener();
+
+    // Keep icon in sync during scroll/resize
+    window.addEventListener('scroll', () => {
+      if (this.activeElement) {
+        this.positionIcon(this.activeElement);
+      }
+    }, true);
+
+    window.addEventListener('resize', () => {
+      if (this.activeElement) {
+        this.positionIcon(this.activeElement);
+      }
+    });
   }
 
   private async initializeFromStorage(): Promise<void> {
@@ -33,11 +47,9 @@ class GrammarChecker {
     const styles = document.createElement('style');
     styles.textContent = `
       .grammar-icon {
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        width: 40px;
-        height: 40px;
+        position: absolute;
+        width: 28px;
+        height: 28px;
         background: #fff;
         border-radius: 50%;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -45,6 +57,9 @@ class GrammarChecker {
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
         z-index: 10000;
       }
 
@@ -171,7 +186,7 @@ class GrammarChecker {
   private checkExistingInputs(): void {
     // Find all text inputs, textareas, and contenteditable elements
     const textInputs = document.querySelectorAll<HTMLElement>(
-      'input[type="text"], textarea, [contenteditable="true"]'
+      'input[type="text"], textarea, [contenteditable]'
     );
 
     textInputs.forEach(input => {
@@ -180,17 +195,29 @@ class GrammarChecker {
   }
 
   private createFloatingIcon(): void {
-    const icon = document.createElement('div');
+    this.icon = document.createElement('div');
+    const icon = this.icon;
     icon.className = 'grammar-icon';
+    icon.style.display = 'none';
+    icon.setAttribute('draggable', 'false');
     icon.innerHTML = `
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block;">
         <path fill="#15C39A" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
         <path fill="#15C39A" d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
       </svg>
     `;
-    
+
     icon.addEventListener('click', () => this.toggleSuggestionPopup());
     document.body.appendChild(icon);
+
+    // Reposition icon whenever a relevant element gains focus
+    document.addEventListener('focusin', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.matches('input[type="text"], textarea, [contenteditable]')) {
+        this.activeElement = target;
+        this.positionIcon(target);
+      }
+    });
   }
 
   private createSuggestionPopup(suggestion: { type: string; text: string; correction: string }): void {
@@ -249,6 +276,23 @@ class GrammarChecker {
     }
   }
 
+  private positionIcon(element: HTMLElement): void {
+    if (!this.icon) return;
+
+    const rect = element.getBoundingClientRect();
+
+    const iconSize = this.icon.offsetWidth || 28;
+    const offset = 8; // distance from border inside the box
+
+    // Center vertically within the element and align to the inside-right edge
+    const top = rect.top + window.scrollY + (rect.height - iconSize) / 2;
+    const left = rect.right + window.scrollX - iconSize - offset;
+
+    this.icon.style.top = `${top}px`;
+    this.icon.style.left = `${left}px`;
+    this.icon.style.display = 'flex';
+  }
+
   private startObserving(): void {
     // Create a mutation observer to watch for new text inputs
     this.observer = new MutationObserver((mutations) => {
@@ -257,12 +301,12 @@ class GrammarChecker {
         mutation.addedNodes.forEach((node) => {
           if (node instanceof HTMLElement) {
             // If the node itself is a text input
-            if (node.matches('input[type="text"], textarea, [contenteditable="true"]')) {
+            if (node.matches('input[type="text"], textarea, [contenteditable]')) {
               this.checkGrammar(node);
             }
             // Check for text inputs within the added node
             const textInputs = node.querySelectorAll<HTMLElement>(
-              'input[type="text"], textarea, [contenteditable="true"]'
+              'input[type="text"], textarea, [contenteditable]'
             );
             textInputs.forEach(input => this.checkGrammar(input));
           }
@@ -286,7 +330,7 @@ class GrammarChecker {
     // Add input event listeners for immediate feedback
     document.addEventListener('input', (e) => {
       const target = e.target as HTMLElement;
-      if (target.matches('input[type="text"], textarea, [contenteditable="true"]')) {
+      if (target.matches('input[type="text"], textarea, [contenteditable]')) {
         this.checkGrammar(target);
       }
     });
